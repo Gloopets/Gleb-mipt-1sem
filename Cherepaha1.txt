@@ -1,0 +1,235 @@
+TASK #3
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+for i in range(1, 10, 1):
+    t.penup()
+    t.goto(-10*i, -10*i)
+    t.pendown()
+    for j in range(4):
+        t.forward(20*i)
+        t.left(90)
+-------------------------
+TASK #4
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+for i in range(180):
+    t.forward(4)
+    t.left(2)
+--------------------------
+TASK #5
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+for i in range(1, 10, 1):
+    t.penup()
+    t.goto(-10*i, -10*i)
+    t.pendown()
+    for j in range(4):
+        t.forward(20*i)
+        t.left(90)
+--------------------------
+TASK #6
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+for i in range(0, 18, 1):
+    t.forward(100)
+    t.stamp()
+    t.backward(100)
+    t.left(20)
+--------------------------
+TASK #7
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+k = 0.36
+for i in range (0, 1800, 1):
+    t.forward(k)
+    t.left(2)
+    k = k + 0.002
+---------------------------
+TASK #8
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+n = 5
+for i in range(100):
+    t.forward(n)
+    t.left(90)
+    t.forward(n)
+    t.left(90)
+    n = n + 5
+----------------------------
+TASK #9
+
+import turtle as t
+import math
+
+t.shape('turtle')
+t.speed(0)
+def Chill(n):
+    t.penup()
+    t.goto(10*n/math.sin(2*math.pi/n), 0)
+    t.setheading(0)
+    t. pendown()
+    t.left(90 + 180/n)
+    for i in range(n):
+        t.forward(n*10)
+        t.left(360/n)
+for j in range(3, 13, 1):
+    Chill(j)
+---------------------------
+TASK #10
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+p = int(input())
+for i in range(p):
+    t.circle(100)
+    t.left(360/p)
+y = int(input())
+----------------------------
+TASK #11
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+p = int(input())
+for i in range(p):
+    t.circle(i)
+    t.left(180)
+    t.circle(i)
+    t.left(180)
+y = int(input())
+----------------------------
+TASK #12
+
+import turtle as t
+
+t.shape('turtle')
+t.speed(0)
+for i in range(10):
+    t.circle(120, 180)
+    t.circle(20, 180)
+
+t.exitonclick()
+----------------------------
+TASK #13
+
+import turtle as t
+
+t.pensize(3)
+t.shape('turtle')
+t.speed(0)
+t.goto(0, -100)
+t.color('black', 'yellow')
+t.begin_fill()
+t.circle(200)
+t.end_fill()
+t.penup()
+
+t.goto(-70, 120)
+t.color('red', 'blue')
+t.pendown()
+t.begin_fill()
+t.circle(40)
+t.end_fill()
+t.penup()
+
+t.goto(70, 120)
+t.pendown()
+t.begin_fill()
+t.circle(40)
+t.end_fill()
+t.penup()
+
+t.goto(-80, 40)
+t.pensize(10)
+t.color('red')
+t.pendown()
+t.right(90)
+t.circle(80, 180)
+t.penup()
+
+t.color('black')
+t.goto(0, 100)
+t.setheading(0)
+t.pendown()
+t.right(110)
+t.forward(60)
+t.left(130)
+t.forward(20)
+
+t.hideturtle()
+t.exitonclick()
+---------------------------
+TASK #14
+
+import turtle as t
+
+def star(rays):
+    for i in range(rays):
+        t.forward(100)
+        t.right(180 - 180/rays)
+star(15)
+t.penup()
+t.goto(200, 0)
+t.pendown()
+star(111)
+----------------------------
+TASK #15
+
+import turtle as t
+t.shape('arrow')
+t.shapesize(0.3)
+t.bgcolor('black')
+t.pensize(1)
+t.screensize(1980, 1440)
+t.color('green', 'white')
+t.speed(0)
+
+def Shalom(depht):
+    if depht == 1:
+        t.begin_fill()
+        for i in range(3):
+            t.forward(5)
+            t.left(120)
+        t.end_fill()
+
+        t.forward(5)
+        t.right(60)
+
+    else:
+        for i in range(7):
+            Shalom(depht - 1)
+            t.penup()
+            t.forward(5*(3**(depht-2)))
+            t.left(120)
+            t.pendown()
+        Shalom(depht - 1)
+        t.forward(5*(3**(depht-2)))
+        t.right(60)
+
+Depht = 5
+t.penup()
+t.goto(-5*(3**(Depht-2)), -3*(3**(Depht-2)))
+Shalom(Depht)
+t.hideturtle()
+t.exitonclick()
