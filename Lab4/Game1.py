@@ -3,18 +3,18 @@ from pygame.draw import *
 from random import randint
 pygame.init()
 pygame.font.init()
-
+# Строки 1-5 - инициализация библиотек
 FPS = 50
 A = 1200
 B = 900
 screen = pygame.display.set_mode((A, B))
-
+# Строки 7-9 - Создание холста и FPS
 Matrix = pygame.font.Font(None, 35)
-Count = pygame.font.Font(None, 50)
 PreText = pygame.font.Font(None, 58)
 Doom = pygame.font.Font(None, 100)
 Aware = pygame.font.Font(None, 170)
-
+Mistake = pygame.font.Font(None, 250)
+# Строки 12-16 - инициализация шрифтов
 Balls_Number = 30
 Rectangles_Number = 10
 Time_Restrict = 40
@@ -23,17 +23,16 @@ Objects_Number = Balls_Number + Rectangles_Number
 objects = Objects_Number
 Score_Restrict = Balls_Number*100 + Rectangles_Number*200
 S = Score_Restrict
-
+# Строки 18-25 - Переменные для режима игры "Custom"
 BOOKOVKI = []
 OSKOLKI = []
 OBLOMKI = []
 SHARIKI = []
 XPEHOTA = []
-
+# Строки 27-31 - создание массивов для объектов игры
 colR = 40
 colG = 240
 colB = 40
-
 flag = -2
 counter = 0
 time_counter = 0
@@ -41,7 +40,7 @@ pre_counter = 0
 DOOM = -9
 Losses = 0
 Wins = 0
-	
+# Строки 33-42 - константы, используемые при расчётах
 def CreateShard(eventpos0, eventpos1, ballcolorRed, ballcolorGreen, ballcolorBlue, ballxspeed, ballyspeed):
 	shard = Shard()
 	shard.x = randint(eventpos0 - 50, eventpos0 + 50)
@@ -52,7 +51,7 @@ def CreateShard(eventpos0, eventpos1, ballcolorRed, ballcolorGreen, ballcolorBlu
 	shard.colorGreen = ballcolorGreen
 	shard.colorBlue = ballcolorBlue
 	OSKOLKI.append(shard)
-	
+# Строки 44-53 - функция создания круглого осколка
 def CreateOblomok(eventpos0, eventpos1, xpencolorRed, xpencolorGreen, xpencolorBlue, xpenxspeed, xpenyspeed):
 	oblomok = Oblomok()
 	oblomok.x = randint(eventpos0 - 50, eventpos0 + 50)
@@ -63,7 +62,7 @@ def CreateOblomok(eventpos0, eventpos1, xpencolorRed, xpencolorGreen, xpencolorB
 	oblomok.colorGreen = xpencolorGreen
 	oblomok.colorBlue = xpencolorBlue
 	OBLOMKI.append(oblomok)
-
+# Строки 55-64 - функция создания квадратного обломка
 class Matreeks:
 	def __init__(self):
 		self.SYM = chr(randint(30,255))
@@ -80,7 +79,7 @@ class Matreeks:
 		self.x += self.xspeed
 		self.y += self.yspeed
 		self.SYM = chr(randint(30,255))
-		
+# Строки 66-81 - описание класса объектов-букв
 def CreateLetter(objx, objy, objxspeed, objyspeed, r, g, b):
 	letter = Matreeks()
 	letter.r = r
@@ -91,7 +90,7 @@ def CreateLetter(objx, objy, objxspeed, objyspeed, r, g, b):
 	letter.xspeed = (letter.x - objx) / 20
 	letter.yspeed = (letter.y - objy) / 20
 	BOOKOVKI.append(letter)
-
+# Строки 83-92 - функция создания объекта-буквы
 class Shard:
 	def __init__(self):
 		self.x = 0
@@ -127,7 +126,7 @@ class Shard:
 		self.yspeed += self.grav
 	def letterize(self, r, g, b):
 		CreateLetter(self.x, self.y, self.xspeed, self.yspeed, r, g, b)
-		
+# Строки 94-128 - описание класса объектов-осколков
 class Oblomok:
 	def __init__(self):
 		self.x = 0
@@ -163,7 +162,7 @@ class Oblomok:
 		self.yspeed += self.grav
 	def letterize(self, r, g, b):
 		CreateLetter(self.x, self.y, self.xspeed, self.yspeed, r, g, b)
-		
+# Строки 130-164 - описание класса объектов-обломков
 class Ball:
 	def __init__(self):
 		self.x = randint(60, A-60)
@@ -219,7 +218,7 @@ class Ball:
 		elif self.life == 1:
 			for i in range(50): 
 				CreateLetter(self.x, self.y, self.xspeed, self.yspeed, r, g, b)
-
+# Строки 166-220 - описание класса объектов-шариков
 class XPEHb:
 	def __init__(self):
 		self.x = randint(0, A-100)
@@ -279,21 +278,24 @@ class XPEHb:
 		elif self.life == 1:
 			for i in range(100): 
 				CreateLetter(self.x + self.width/2, self.y + self.height/2, self.xspeed, self.yspeed, r, g, b)
-	
+# Строки 222-280 - описание класса объектов-прямоугольников
 def WhiteNoise(objects, r, g, b):
 	if objects == -1: 
 		pass
 	else:
-		num = randint((1000/Objects_Number**2*objects**2)//1, (1500/Objects_Number**2*objects**2)//1)
+		num = randint((1000/(Objects_Number**2)*objects**2)//1, (1500/(Objects_Number**2)*objects**2)//1)
 		for i in range (num):
 			rect(screen, (r, g, b), (randint(0, A), randint(0, B), randint(1, 3), randint(10, 20)), 0)
-		
+# Строки 282-288 - функция создания белого шума (заданного цвета)	
 def DOOM_Noise(Doom, r, g, b):
-	num = randint((400*Doom)//1, (500*Doom)//1)
+	num = randint((300*Doom)//1, (350*Doom)//1)
 	for i in range (num):
-		rect(screen, (r, g, b), (randint(0, A), randint(0, B), randint(1, 3), randint(10, 20)), 0)
-		rect(screen, (r, g, b), (randint(0, A), randint(0, B), randint(10, 20), randint(1, 3)), 0)
-		
+		Side = randint(1, 3)*10
+		X = randint(0, A)
+		Y = randint(0, B)
+		polygon(screen, (r, g, b), [(X-Side,Y), (X-Side/10, Y-Side/10), (X, Y-Side), (X+Side/10, Y-Side/10), 
+		(X+Side,Y), (X+Side/10, Y+Side/10), (X, Y+Side), (X-Side/10, Y+Side/10)], 0)
+# Строки 290-298 - функция, аналогичная предыдущей, но теперь создающая кресты
 def FillFigures(Balls_Number, Rectangles_Number):
 	for i in range(Balls_Number):
 		ball = Ball()
@@ -301,7 +303,7 @@ def FillFigures(Balls_Number, Rectangles_Number):
 	for i in range(Rectangles_Number):
 		xpen = XPEHb()
 		XPEHOTA.append(xpen)
-	
+# Строки 299-305 - функция, заполняющая массивы объектов-шариков и объектов-квадратов нужным их количеством
 def RemoveObjects(colR, colG, colB):
 	for ball in SHARIKI:
 		ball.letterize(colR, colG, colB)
@@ -315,13 +317,13 @@ def RemoveObjects(colR, colG, colB):
 	for oblomok in OBLOMKI:
 		oblomok.letterize(colR, colG, colB)
 		OBLOMKI.remove(oblomok)
-
+# Строки 307-319 - функция удаления и распада на буковки всех объектов кроме буковок
 pygame.display.update()
 clock = pygame.time.Clock()
 finished = False
 while not finished:
 	clock.tick(FPS)
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 321-325 - Старт игры. Переменная flag, использующаяся в дальнейшем отвечает за номер показываемой части игры
 	if flag == -2:
 		Disclaimer = 'If you have epilepsy: play another game'
 		DisclaimerShow = PreText.render(Disclaimer, True, (80, 255, 80))
@@ -330,7 +332,7 @@ while not finished:
 		Disclaimer2 = 'Else: press any button'
 		Disclaimer2Show = PreText.render(Disclaimer2, True, (255, 255, 80))
 		screen.blit(Disclaimer2Show, (350, 420))
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 327-334 - Флаг = -2. Дисклеймер при запуске игры
 	if flag == -1:
 		if Losses <= 3 and Wins == 0:
 			colR = 40 + Losses*70
@@ -344,7 +346,7 @@ while not finished:
 		RemoveObjects(colR, colG, colB)
 		for bookva in BOOKOVKI:
 			BOOKOVKI.remove(bookva) 
-		
+# Строки 336-348 - Флаг = -1. Выставление цвета шумов в соответствии со статусом игрока (числом побед и поражений)
 		rect(screen, (255, 255, 0), (480, 20, 250, 55), 0)
 		Menu1 = 'Main menu'
 		Menu1Show = PreText.render(Menu1, True, (0, 0, 0))
@@ -379,7 +381,7 @@ while not finished:
 		Info = 'Info'
 		InfoShow = PreText.render(Info, True, (0, 255, 255))
 		screen.blit(InfoShow, (310, 30))
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 350-383 - Флаг = -1. Оформление остальной части главного меню: кнопки с режимами, выход, информация
 	if flag == 0:
 		pre_counter += 2
 		screen.fill((0, 0, 0))
@@ -403,15 +405,15 @@ while not finished:
 		Preambula2 = 'Through distortion, the Matrix CODE became visible.'
 		Pre2Show = PreText.render(Preambula2, True, (80, 255, 80))
 		screen.blit(Pre2Show, (60, 230))
-		if pre_counter < 360:
-			rect(screen, (0, 0, 0), (60 + (pre_counter-160)*5.6, 230, 2000, 70))
+		if pre_counter < 400:
+			rect(screen, (0, 0, 0), (60 + (pre_counter-200)*6.6, 230, 10000, 70))
 			
 		Preambula3 = 'The CODE must be hidden. Interference must be removed.'
 		Pre3Show = PreText.render(Preambula3, True, (80, 255, 80))
 		screen.blit(Pre3Show, (40, 360))
 		if pre_counter <= 600:
 			rect(screen, (0, 0, 0), (40 + (pre_counter-400)*4.2, 360, 4000, 70))
-			rect(screen, (0, 0, 0), (560, 360, 4000, 70))
+			rect(screen, (0, 0, 0), (560, 360, 10000, 70))
 		if 600 < pre_counter < 800:
 			rect(screen, (0, 0, 0), (560 + (pre_counter-600)*4.2, 360, 4000, 70))
 			
@@ -419,7 +421,7 @@ while not finished:
 		Pre4Show = PreText.render(Preambula4, True, (80, 255, 80))
 		screen.blit(Pre4Show, (40, 440))
 		if pre_counter < 1000:
-			rect(screen, (0, 0, 0), (40 + (pre_counter-800)*5.6, 440, 6000, 70))
+			rect(screen, (0, 0, 0), (40 + (pre_counter-800)*6.6, 440, 10000, 70))
 			
 		Preambula5 = '(Press any button to start)'
 		Pre5Show = PreText.render(Preambula5, True, (225, 255, 80))
@@ -427,12 +429,10 @@ while not finished:
 			screen.blit(Pre5Show, (340, 600))
 		if pre_counter < 1100:
 			rect(screen, (0, 0, 0), (340, 600, 700, 70))
-		if pre_counter >= 2100:
-			flag = 1
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 385-431 - Флаг = 0. Сюжетный сегмент с встроенным счётчиком времени
 	if flag == 1:
 		time_counter += 2
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 433-434 - Флаг = 1. Процесс игры: Время отсчитывается синхронно с реальным
 	if flag == 2:
 		if Losses == 3:
 			WhiteNoise(Objects_Number, colR, colG, colB)
@@ -449,7 +449,7 @@ while not finished:
 		Pause2 = 'Quit'
 		Pause2Show = Aware.render(Pause2, True, (255, 80, 80))
 		screen.blit(Pause2Show, (470, 420))
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 436-451 - Флаг = 2. Меню паузы: возвращение в меню, выход из игры
 	if flag == 3:
 		WhiteNoise(Objects_Number, colR, colG, colB)
 		
@@ -467,7 +467,6 @@ while not finished:
 		rect(screen, (0, 0, 0), (40, 120, 1120, 740), 0)
 		rect(screen, (0, 255, 255), (40, 120, 1120, 740), 3)
 		
-		
 		if Wins == 0 and Losses != 0:
 			rect(screen, (255, 255, 255), (800, 20, 270, 55), 0)
 			Information = 'STATUS: Losses = '+str(Losses) 
@@ -480,9 +479,9 @@ while not finished:
 		InformationShow = Matrix.render(Information, True, (0, 0, 0))
 		screen.blit(InformationShow, (820, 37))
 		
-		Information = 'The Manual:'
+		Information = 'Manual:'
 		InformationShow = Doom.render(Information, True, (40, 240, 250))
-		screen.blit(InformationShow, (360, 130))
+		screen.blit(InformationShow, (400, 130))
 		
 		Information = 'You are in the Main menu. Click with your mouse button'
 		InformationShow = PreText.render(Information, True, (40, 240, 250))
@@ -527,37 +526,49 @@ while not finished:
 		Information = 'PAB to skip it and return to Main menu.'
 		InformationShow = PreText.render(Information, True, (40, 240, 250))
 		screen.blit(InformationShow, (60, 810))
-#----------------------------------------------------------------------------------------------------------------------------------------------	
-	for event in pygame.event.get():
-		if event.type == pygame.KEYDOWN:
-			if flag == -2:
+# Строки 453-528 - Флаг = 3. Сегмент с информацией, доступный в главном меню
+	if flag == 4:
+		DOOM_Noise(3, 255, 0, 0)
+		rect(screen, (0, 0, 0), (80, 320, 1060, 190), 0)
+		rect(screen, (255, 0, 0), (80, 320, 1060, 190), 3)
+		xcount += 2
+		
+		Information = 'TURN BACK'
+		InformationShow = Mistake.render(Information, True, (255, 0, 0))
+		screen.blit(InformationShow, (100, 340))
+		if xcount > 30:
+			flag = F
+# Строки 530-540 - Флаг = 4
+	for event in pygame.event.get(): 				# Виды событий во время игры
+		if event.type == pygame.KEYDOWN:				# Событие - нажатие любой кнопки на клавиатуре 
+			if flag == -2:									# Если показан дисклеймер, событие перенесёт игрока в главное меню
 				flag = -1
-			elif flag == 0:
+			elif flag == 0:									# Если показан сюжетный сегмент, событие откроет строчку текста
 				if pre_counter < 1100:
-					pre_counter = (pre_counter//200 + 1)*200
-				else:
+					pre_counter = (pre_counter//200 + 1)*200 - 20
+				else:										# Если счётчик достиг отметки 11 секунд, событие начнёт игру
 					flag = 1
-			elif flag == 1:
+			elif flag == 1:									# Событие во время игры откроет меню паузы
 				if objects > -1: 
 					flag = 2
-				else: 
+				else: 										# Если началась концовка, событие вернёт игрока в главное меню
 					DOOM = DeadEnd
-			elif flag == 2:
-				flag = 1	
-		elif event.type == pygame.MOUSEBUTTONDOWN:
-			if flag == -2:
+			elif flag == 2:									# Событие во время паузы возобновит игру с места остановки
+				flag = 1
+		elif event.type == pygame.MOUSEBUTTONDOWN:		# Событие - нажатие любой кнопки мыши
+			if flag == -2:									# Если показан дисклеймер, событие перенесёт игрока в главное меню
 				flag = -1
-			elif flag == -1:
-				if 430 < event.pos[0] < 770 and 200 < event.pos[1] < 350:
+			elif flag == -1:								# В главном меню
+				if 430 < event.pos[0] < 770 and 200 < event.pos[1] < 350:	# Нажатие на кнопку "Easy" начнёт игру в простом режиме
 					FillFigures(6, 2)
 					Time_Restrict = 20
 					Score_Restrict = 1000
 					Objects_Number = 8
 					objects = Objects_Number
-					LPD = 3
-					WPV = 1
+					LPD = 3			# LPD - Losses Per Defeat - число засчитываемых поражений при одном проигрыше в данном режиме
+					WPV = 1			# WPV - Wins Per Victory - число засчитываемых побед при одном выигрыше в данном режиме
 					flag = 0
-				elif 430 < event.pos[0] < 770 and 400 < event.pos[1] < 550:
+				elif 430 < event.pos[0] < 770 and 400 < event.pos[1] < 550:	# Нажатие на кнопку "Hard" начнёт игру в сложном режиме
 					FillFigures(60, 20)
 					Time_Restrict = 70
 					Score_Restrict = 10000
@@ -566,7 +577,7 @@ while not finished:
 					LPD = 1
 					WPV = 3
 					flag = 0
-				elif 360 < event.pos[0] < 840 and 600 < event.pos[1] < 750:
+				elif 360 < event.pos[0] < 840 and 600 < event.pos[1] < 750: # Нажатие на кнопку "Custom" начнёт игру в настраиваемом режиме
 					FillFigures(Balls_Number, Rectangles_Number)
 					Time_Restrict = T
 					Score_Restrict = S
@@ -575,14 +586,14 @@ while not finished:
 					LPD = 1
 					WPV = 1
 					flag = 0
-				elif 290 < event.pos[0] < 405 and 20 < event.pos[1] < 75:
+				elif 290 < event.pos[0] < 405 and 20 < event.pos[1] < 75:	# Нажатие на кнопку "Info" откроет информационный сегмент
 					flag = 3
-				elif 800 < event.pos[0] < 930 and 20 < event.pos[1] < 75:
+				elif 800 < event.pos[0] < 930 and 20 < event.pos[1] < 75:	# Нажатие на кнопку "Quit" выключит игру
 					finished = True
-			elif flag == 0:
-				if 800 < event.pos[0] < 930 and 20 < event.pos[1] < 75:
+			elif flag == 0:									# Если показан сюжетный сегмент
+				if 800 < event.pos[0] < 930 and 20 < event.pos[1] < 75:		# Нажатие на кнопку "Skip" начнёт игру
 					flag = 1
-			elif flag == 1:
+			elif flag == 1:									# Если идёт игра, событие разрушит объекты попавшие под курсор (со спецэффектами)
 				for ball in SHARIKI:
 					if ((event.pos[0] -ball.x)**2 + (event.pos[1] - ball.y)**2)**0.5 < ball.r and ball.life == 2:
 						for i in range(50):
@@ -603,23 +614,28 @@ while not finished:
 						XPEHOTA.remove(xpen)
 						for i in range(300):
 							CreateOblomok(event.pos[0], event.pos[1], xpen.colorRed, xpen.colorGreen, xpen.colorBlue, xpen.xspeed, xpen.yspeed)
-			elif flag == 2:
-				if 400 < event.pos[0] < 800 and 200 < event.pos[1] < 350:
+			elif flag == 2:									# В меню паузы
+				if 400 < event.pos[0] < 800 and 200 < event.pos[1] < 350:	# Нажатие на кнопку "Menu" вернёт игрока в главное меню
 					flag = -1
 					counter = 0
 					time_counter = 0
 					pre_counter = 0
 					DOOM = -9
 					Wins = 0
-					Losses += LPD
-				elif 430 < event.pos[0] < 770 and 400 < event.pos[1] < 550:
+					Losses += LPD							# Выход в меню приравнивается к поражению
+				elif 430 < event.pos[0] < 770 and 400 < event.pos[1] < 550:	# Нажатие на кнопку "Quit" выключит игру
 					finished = True
-			elif flag == 3:
+			elif flag == 3:									# Нажатие на кнопку "Main menu" в сегменте Info вернёт игрока в главное меню
 				if 480 < event.pos[0] < 730 and 20 < event.pos[1] < 75:
 					flag = -1
-		elif event.type == pygame.QUIT and flag == -2:
-			finished = True
-#----------------------------------------------------------------------------------------------------------------------------------------------
+		elif event.type == pygame.QUIT:		# Только во время дисклеймера работает крестик в углу экрана
+			if flag == -2:
+				finished = True
+			else:							# Иначе Флаг = 4
+				if flag != 4: F = flag
+				flag = 4
+				xcount = 0
+# Строки 542-637 - виды событий во время игры
 	if flag == 1:
 		if Losses == 3:
 			WhiteNoise(Objects_Number, colR, colG, colB)
@@ -660,33 +676,33 @@ while not finished:
 		Co = 'Score:'+' '+str(counter)+' / '+str(Score_Restrict)
 		Ti = 'Time:'+' '+str(time_counter//1/100)
 		if 0 < time_counter < (Time_Restrict - 10)*100 and objects != -1:
-			CountShow = Count.render(Co, True, (colR, colG, colB))
-			TimeShow = Count.render(Ti, True, (colR, colG, colB))
+			CountShow = PreText.render(Co, True, (colR, colG, colB))
+			TimeShow = PreText.render(Ti, True, (colR, colG, colB))
 		elif time_counter%100 < 50 and objects != -1:
-			CountShow = Count.render(Co, True, (255 - colR, 255 -colG, 255 - colB))
-			TimeShow = Count.render(Ti, True, (255 - colR, 255 -colG, 255 - colB))
+			CountShow = PreText.render(Co, True, (255 - colR, 255 -colG, 255 - colB))
+			TimeShow = PreText.render(Ti, True, (255 - colR, 255 -colG, 255 - colB))
 		elif time_counter%100 >= 50 and objects != -1:
-			CountShow = Count.render(Co, True, (colR, colG, colB))
-			TimeShow = Count.render(Ti, True, (colR, colG, colB))
+			CountShow = PreText.render(Co, True, (colR, colG, colB))
+			TimeShow = PreText.render(Ti, True, (colR, colG, colB))
 		elif objects == -1 and Victory == 1:
 			if Wins <= 3 - WPV:
-				CountShow = Count.render(Co, True, (40, 240, 40 + (Wins + WPV)*70))
-				TimeShow = Count.render(Ti, True, (40, 240, 40 + (Wins + WPV)*70))
+				CountShow = PreText.render(Co, True, (40, 240, 40 + (Wins + WPV)*70))
+				TimeShow = PreText.render(Ti, True, (40, 240, 40 + (Wins + WPV)*70))
 			else:
-				CountShow = Count.render(Co, True, (40, 240, 250))
-				TimeShow = Count.render(Ti, True, (40, 240, 250))
+				CountShow = PreText.render(Co, True, (40, 240, 250))
+				TimeShow = PreText.render(Ti, True, (40, 240, 250))
 		elif objects == -1 and Victory == 0:
 			if Losses <= 3 - LPD:
-				CountShow = Count.render(Co, True, (40 + (Losses + LPD)*70, 240 - (Losses + LPD)*70, 40))
-				TimeShow = Count.render(Ti, True, (40 + (Losses + LPD)*70, 240 - (Losses + LPD)*70, 40))
+				CountShow = PreText.render(Co, True, (40 + (Losses + LPD)*70, 240 - (Losses + LPD)*70, 40))
+				TimeShow = PreText.render(Ti, True, (40 + (Losses + LPD)*70, 240 - (Losses + LPD)*70, 40))
 			else:
-				CountShow = Count.render(Co, True, (250, 30, 40))
-				TimeShow = Count.render(Ti, True, (250, 30, 40))
+				CountShow = PreText.render(Co, True, (250, 30, 40))
+				TimeShow = PreText.render(Ti, True, (250, 30, 40))
 		screen.blit(CountShow, (12, 9))
-		screen.blit(TimeShow, (12, 59))
+		screen.blit(TimeShow, (12, 69))
 	pygame.display.update()
 	screen.fill((0, 0, 0))
-#----------------------------------------------------------------------------------------------------------------------------------------------
+# Строки 639-704 - если идёт игра, то с каждым кадром объекты и счётчики времени и очков отрисовываются заново
 	if counter >= Score_Restrict - 1:
 		counter = Score_Restrict//1 + Score_Restrict%1
 		objects = -1
@@ -699,6 +715,7 @@ while not finished:
 		Victory = 0
 		Score = counter
 		RemoveObjects(colR, colG, colB)
+# Строки 706-717 - условия победы и поражения
 	if flag == 1:
 		if objects == -1:
 			DOOM += 0.02
@@ -724,7 +741,7 @@ while not finished:
 						Warn = 'Matrix Updates'
 						WarnShow = Aware.render(Warn, True, (40, 240, 250))
 					screen.blit(WarnShow, (150, 400))
-				elif -3 < DOOM < 5:
+				elif -3 < DOOM < 3:
 					if Wins <= 3 - WPV:
 						if Wins == 0:
 							Warn = 'Matrix Reloads'
@@ -761,7 +778,7 @@ while not finished:
 					else: 
 						WarnShow = Aware.render(Warn, True, (250, 30, 40))
 					screen.blit(WarnShow, (150, 400))
-				elif -3 < DOOM < 6:
+				elif -3 < DOOM < 3:
 					Warn = 'Matrix corrupts'
 					if Losses <= 3 - LPD:
 						WarnShow = Aware.render(Warn, True, (40 + (Losses + LPD)*70, 240 - (Losses + LPD)*70, 40))
@@ -798,5 +815,6 @@ while not finished:
 					Wins += WPV
 	if Wins >= 4: Wins = 3
 	if Losses >= 4: Losses = 3
+# Строки 719-817 - виды концовок в зависимости от результата ишры 
 pygame.quit()
 
