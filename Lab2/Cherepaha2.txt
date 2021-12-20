@@ -1,0 +1,130 @@
+TASK #1
+
+import turtle as t
+from random import *
+
+t.speed(0)
+t.color('red')
+t.bgcolor('black')
+t.shape('turtle')
+t.shapesize(10)
+t.screensize(10000, 10000)
+for i in range(100000):
+    t.forward(randint(0, 30))
+    t.left(randint(1, 360))
+-----------------------------
+TASK #2
+
+import turtle as t
+
+N0 = [0, 0, 50, 0, 0, -100, -50, 0, 0, 100, 0, 0]
+N1 = [0, -50, 50, 50, 0, -100, -50, 100]
+N2 = [0, 0, 50, 0, 0, -50, -50, -50, 50, 0, -50, 100]
+N3 = [0, 0, 50, 0, -50, -50, 50, 0, -50, -50, 0, 100]
+N4 = [0, 0, 0, -50, 50, 0, 0, -50, 0, 100, -50, 0]
+N5 = [0, -100, 50, 0, 0, 50, -50, 0, 0, 50, 50, 0, -50, 0]
+N6 = [50, 0, -50, -50, 0, -50, 50, 0, 0, 50, -50, 0, 0, 50]
+N7 = [0, -100, 0, 50, 50, 50, -50, 0, 0, 0]
+N8 = [0, 0, 50, 0, 0, -100, -50, 0, 0, 50, 50, 0,-50, 0, 0, 50, 0, 0]
+N9 = [0, -100, 50, 50, 0, 50, -50, 0, 0, -50, 50, 0, -50, 50]
+
+NA = [N0, N1, N2, N3, N4, N5, N6, N7, N8, N9]
+
+t.shape('turtle')
+t.speed(6)
+t.color('green')
+t.bgcolor('black')
+t.pensize(3)
+A = input().split()
+for i in range(len(A)):
+    A[i] = int(A[i])
+
+t.penup()
+x = -300
+y = 50
+for i in range(len(A)):
+    B = NA[A[i]]
+    x += B[0]
+    y += B[1]
+    t.goto(x, y)
+    t.pendown()
+    for j in range(2, len(B) - 3, 2):
+        x += B[j]
+        y += B[j + 1]
+        t.goto(x, y)
+    t.penup()
+    x += B[len(B) - 2]
+    y += B[len(B) - 1]
+    t.goto(x, y)
+    x += 100
+    t.forward(100)
+
+t.exitonclick()
+-----------------------------
+TASK #3
+
+import turtle as t
+
+t.speed(2)
+t.color('red')
+t.bgcolor('black')
+t.shape('circle')
+t.screensize(10000, 10000)
+t.goto(500, 0)
+t.goto(-400, 0)
+x = -400
+y = 0
+Vx = 3
+Vy = 20
+Ay = -1
+for dt in range(500):
+    x += Vx
+    y += Vy + Ay/2
+    Vy += Ay
+    if y < 0:
+       t.goto(x, 0)
+       y = 0
+       Vy = -Vy * 0.9
+    else:
+        t.goto(x,y)
+t.exitonclick()
+-----------------------------
+TASK #4
+
+import turtle as t
+import math
+from random import *
+
+t.speed(0)
+t.shape('square')
+t.penup()
+t.goto(-200, -200)
+t.pendown()
+for i in range(4):
+    t.forward(400)
+    t.left(90)
+t.hideturtle()
+
+pool = [t.Turtle(shape='circle') for i in range(10)]
+for unit in pool:
+    unit.penup()
+    unit.speed(10)
+    unit.left(randint(1, 360))
+    unit.goto(randint(-200, 200), randint(-200, 200))
+
+while True:
+    for unit in pool:
+        if -200 < unit.xcor() < 200 and -200 < unit.ycor() < 200:
+            unit.forward(2)
+        elif unit.xcor() >= 200:
+            unit.left(180 - 2*unit.heading())
+            unit.forward(2)
+        elif unit.ycor() >= 200:
+            unit.left(180 - 2*(unit.heading()-90))
+            unit.forward(2)
+        elif unit.xcor() <= -200:
+            unit.left(180 - 2*(unit.heading()-180))
+            unit.forward(2)
+        elif unit.ycor() <= -200:
+            unit.left(180 - 2*(unit.heading()-270))
+            unit.forward(2)
